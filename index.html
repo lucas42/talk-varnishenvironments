@@ -274,33 +274,6 @@ acl allowedusers {
 					}
 				}
 			});
-
-			// Fastclick demo
-			(function() {
-				var fc = document.querySelector('.fastclick-demo');
-				var pointer = document.querySelector('.pointer');
-				var pointer_size = (pointer.offsetWidth/2);
-				var timers = {};
-				fc.addEventListener('click', function(e) {
-					if (timers[e.target]) clearTimeout(timers[e.target]);
-					timers[e.target] = setTimeout(function() {
-						e.target.classList.toggle('selected');
-					}, e.target.parentNode.classList.contains('slow') ? 300 : 0);
-					console.log('Mouse position', e.x, e.y);
-					pointer.style.top = (e.y-pointer_size)+'px';
-					pointer.style.left = (e.x-pointer_size)+'px';
-					pointer.style.opacity = 0.7;
-					if (timers.pointer) clearTimeout(timers.pointer);
-					timers.pointer = setTimeout(function() {
-						pointer.style.opacity = 0;
-					}, 150);
-				});
-			}());
-
-			// Keyboard bindings for remote clicker
-			document.body.addEventListener('keyup', function(e) {
-				console.log(e);
-			});
 		</script>
 
 	</body>
