@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>One VCL to rule them all - Luke Blaney</title>
+
+		<meta name="description" content="A presentation about writing Varnish config to work across multiple environments">
+		<meta name="author" content="Luke Blaney">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/ftlabs.css" id="theme">
+		<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+	<div class='pointer'></div>
+
+		<div class="reveal">
+			<div class="slides">
+
+				<section class='logo-title dark-background' data-background='css/theme/ftlabs_images/purple-blue-2.jpg'>
+					<h1>One VCL to rule all environments</h1>
+					<h3>Write it once, use it everywhere.</h3>
+					<p>
+						<small>by Luke Blaney, FT Labs (<a href="http://twitter.com/lucas42">@lucas42</a>)</small>
+					</p>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+			Reveal.initialize({
+				width: 1280,
+    			height: 800,
+				controls: false,
+				progress: true,
+				history: true,
+				center: true,
+				theme: 'ftlabs',
+				transition: 'concave',
+				backgroundTransition: 'slide',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+			Reveal.addEventListener('slidechanged', function(e) {
+				if (e.currentSlide.classList.contains('big-quote')) {
+					var h1 = e.currentSlide.querySelector('h1');
+					if (h1 && !e.currentSlide.querySelector('span.bghead')) {
+						var bgh1 = document.createElement('span');
+						bgh1.classList.add('bghead');
+						bgh1.innerHTML = h1.innerHTML;
+						h1.parentNode.appendChild(bgh1);
+					}
+				}
+			});
+
+			// Fastclick demo
+			(function() {
+				var fc = document.querySelector('.fastclick-demo');
+				var pointer = document.querySelector('.pointer');
+				var pointer_size = (pointer.offsetWidth/2);
+				var timers = {};
+				fc.addEventListener('click', function(e) {
+					if (timers[e.target]) clearTimeout(timers[e.target]);
+					timers[e.target] = setTimeout(function() {
+						e.target.classList.toggle('selected');
+					}, e.target.parentNode.classList.contains('slow') ? 300 : 0);
+					console.log('Mouse position', e.x, e.y);
+					pointer.style.top = (e.y-pointer_size)+'px';
+					pointer.style.left = (e.x-pointer_size)+'px';
+					pointer.style.opacity = 0.7;
+					if (timers.pointer) clearTimeout(timers.pointer);
+					timers.pointer = setTimeout(function() {
+						pointer.style.opacity = 0;
+					}, 150);
+				});
+			}());
+
+			// Keyboard bindings for remote clicker
+			document.body.addEventListener('keyup', function(e) {
+				console.log(e);
+			});
+		</script>
+
+	</body>
+</html>
